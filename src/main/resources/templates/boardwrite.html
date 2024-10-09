@@ -1,36 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>게시물 작성 폼</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="/css/write.css">
 </head>
-
-<style>
-    .layout{
-        width : 500px;
-        margin : 0 auto;
-    }
-    .layout  input{
-        width : 100%;
-        box-sizing : border-box
-    }
-    .layout  textarea{
-        width : 100%;
-        margin-top : 10px;
-        min-height : 300px;
-    }
-</style>
-
 <body>
-    <div class=" layout">
-        <form action="/board/writepro" method="post">
-
-
-        <input name="title" type = "text">
-            <textarea name="content"></textarea>
-            <button type="submit">작성</button>
-        </form>
-
+<header>
+    <div class="header-container">
+        <div class="top-bar">
+            <div class="logo">
+                <a href="../메인페이지/main.html">
+                    <img src="../Logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="search-bar-container">
+                <input type="text" class="search-bar" placeholder="검색어 입력">
+                <span class="search-icon"><img src="../search.png" alt=""></span>
+            </div>
+            <div class="user-icons">
+                <div class="bell-icon"><a href="../알림/notification.html">
+                    <img src="../bell.png" alt="">
+                </a></div>
+                <div class="user-icon">
+                    <img src="../user.png" alt="">
+                    <ul>
+                        <li><a href="../회원정보수정/edit.html">회원정보수정</a></li>
+                        <li><a href="../내가 쓴 게시글/내가 쓴 게시글.html">내가 쓴 게시글</a></li>
+                        <li><a href="../좋아요한 게시글/좋아요 한 게시글.html">좋아요 누른 게시글</a></li>
+                        <li><a href="../저장한 게시글/저장한 게시글.html">저장 한 게시글</a></li>
+                        <li><a href="../로그인/login.html">로그아웃</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul class="main-menu">
+                <li class="menu-item">게시글
+                    <ul class="submenu">
+                        <li><a href="../HOT게시글/hot.html">HOT 게시글</a></li>
+                        <li><a href="../최신 게시글/recent.html">최신 게시글</a></li>
+                        <li><a href="../게시글 작성/write.html">게시글 작성하기</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">1:1채팅
+                    <ul class="submenu">
+                        <li>1:1 채팅</li>
+                    </ul>
+                </li>
+                <li class="menu-item">랭킹
+                    <ul class="submenu">
+                        <li><a href="../조회수랭킹/rank.html">조회수</a></li>
+                        <li><a href="../유용한 정보 제공자/info.html">유용한 정보 제공자</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">자주 묻는 질문 (FAQ)
+                    <ul class="submenu">
+                        <li><a href="../FAQ/faq.html">자주 묻는 질문</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">지원&문의
+                    <ul class="submenu">
+                        <li>지원 요청</li>
+                        <li>고객센터</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     </div>
+</header>
+
+<main>
+    <div class="post-container layout">
+        <h1>게시글 작성</h1>
+        <hr class="title-underline">
+        <form action="/board/writepro" method="post">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" placeholder="제목 입력">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <div class="textarea-container">
+                    <div class="editor-header">
+                        <div class="icons">
+                            <span class="image-icon"></span>
+                            <span class="video-icon"></span>
+                            <span class="attachment-icon"></span>
+                        </div>
+                    </div>
+                    <textarea id="content" name="content" placeholder="내용 입력"></textarea>
+                </div>
+            </div>
+            <hr class="title-underline">
+            <div class="form-buttons">
+                <button type="button" class="cancel-button"><a href="../최신 게시글/recent.html">취소</a></button>
+                <button type="submit" class="submit-button">등록</button>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>

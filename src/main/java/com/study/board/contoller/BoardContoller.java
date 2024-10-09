@@ -4,10 +4,8 @@ import com.study.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 @Controller
 public class BoardContoller {
     @Autowired
@@ -22,10 +20,13 @@ public class BoardContoller {
     }
 
     @PostMapping("/board/writepro")
-    public String boardWritePro(Board board){
+    public String boardWritePro(Board board, Model model) {
         boardService.write(board);
-        return "";
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+        return "message"; // "message.html" 템플릿 파일을 반환
     }
+
 
     @GetMapping("/board/list")
     public  String boardList(Model model){
@@ -39,5 +40,28 @@ public class BoardContoller {
         // localhost/board/view?id=1
         return "boardView"; // 뷰를 담당하는 템플릿 파일 이름 리턴에 써주면 된다..
     }
+    @GetMapping("/board/delete")
+    public String boardDelete(@RequestParam("id") int id){
+        boardService.boardDelete(id);
+        return "redirect:/board/list";
+    }
 
+    @GetMapping("board/modify/{id}")
+    public String boardModify(@PathVariable("id") int id, Model model) {
+
+        model.addAttribute("board",boardService.boardView(id));
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+        return "redirect:/board/message";
+    }
+    @PostMapping("/board/update/{id}")
+    public String boardUpdate(@PathVariable("id") int id, Board board){
+        Board boardTemp =boardService.boardView(id);// 기존 내용 가져오기
+        boardTemp.setTitle(board.getTitle()); //덮어 싀우기
+        boardTemp.setContent(board.getContent()); //덮어 싀우기
+
+        boardService.write(boardTemp);
+        return "redirect:/board/list";
+    }
 }
