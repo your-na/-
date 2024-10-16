@@ -6,16 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
-public class BoardContoller {
+public class BoardController {
     @Autowired
     private BoardService boardService;
 
 
     @GetMapping("/board/write")
     public String boardWriteForm(){
-
-
         return "boardwrite";
     }
 
@@ -30,8 +30,14 @@ public class BoardContoller {
 
     @GetMapping("/board/list")
     public  String boardList(Model model){
-        model.addAttribute("list",boardService.boardList());
-        return "boardList";
+        List<Board> boards = boardService.boardList();
+        long totalBoards = boardService.countBoards(); // 전체 게시글 수
+        int pageSize = 10; // 한 페이지에 표시할 게시글 수
+        int totalPages = (int) Math.ceil((double) totalBoards / pageSize); // 전체 페이지 수 계산
+
+        model.addAttribute("list", boards);
+        model.addAttribute("totalPages", totalPages);
+        return "boardList"; // 게시글 리스트를 보여줄 템플릿
     }
 
     @GetMapping("/board/view")
@@ -50,10 +56,8 @@ public class BoardContoller {
     public String boardModify(@PathVariable("id") int id, Model model) {
 
         model.addAttribute("board",boardService.boardView(id));
-        model.addAttribute("message", "글 작성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/board/list");
 
-        return "redirect:/board/message";
+        return "boardmodify";
     }
     @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") int id, Board board){
@@ -64,4 +68,5 @@ public class BoardContoller {
         boardService.write(boardTemp);
         return "redirect:/board/list";
     }
+
 }
