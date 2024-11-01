@@ -245,6 +245,12 @@ h2 {
 .post-content p {
     margin: 5px 0 10px;
     color: #666;
+    overflow: hidden;       /* 넘치는 텍스트를 숨김 */
+    text-overflow: ellipsis; /* 생략 기호(...) 추가 */
+    display: -webkit-box;
+    -webkit-line-clamp: 1;   /* 원하는 줄 수 (1줄로 제한) */
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }
 
 .post-info {

@@ -22,8 +22,12 @@
                     <a class="action-button" th:href="@{/board/modify/{id}(id=${board.id})}">수정하기</a>
                 </div>
             </div>
+
         </div>
-        <!--게시글 이미지 아직 구현안함
+
+        <!--
+        TODO: 게시글 이미지 구현
+        게시글 이미지 아직 구현안함
         <img src="/images/beach.png" alt="게시글 이미지" class="post-image">-->
         <div class="post-info">
             <span>작성일: </span>
@@ -32,8 +36,30 @@
         <div class="post-content">
             <pre th:utext="${board.content}"></pre>
         </div>
+        <div class="post-info">
+            <div>
+                <img src="/images/comment.png" alt="댓글 아이콘">
+                <span th:text="|${#lists.size(board.commentList)}|">댓글수</span>
+            </div>
+            <div>
+                <img src="/images/heart.png" alt="하트 아이콘">
+                <span>하트수</span>
+            </div>
+            <div>
+                <img src="/images/bookmark.png" alt="저장 아이콘">
+                <span>저장된 수</span>
+            </div>
+        </div>
     </div>
-
+    <div>
+        <ul>
+            <li th:each="comment : ${board.commentList}" th:text="${comment.content}"></li>
+        </ul>
+    </div>
+    <form class="comment-form" th:action="@{|/comment/create/${board.id}|}" method="POST">
+        <textarea name="content" placeholder="댓글을 작성하세요..." rows="4"></textarea>
+        <button type="submit" >댓글 작성</button>
+    </form>
 </main>
 </body>
 </html>

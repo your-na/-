@@ -7,8 +7,9 @@ import com.study.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
+import com.study.board.DataNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -18,11 +19,6 @@ public class BoardService {
     // 글 작성 처리
     public void write(Board board) {
         boardRepository.save(board);
-    }
-
-    // 게시글 리스트 처리
-    public List<Board> boardList() {
-        return boardRepository.findAll();
     }
 
     public Page<Board> getList(int page) {
@@ -38,9 +34,12 @@ public class BoardService {
     public void boardDelete(int id) {
         boardRepository.deleteById(id);
     }
-
-    // 전체 게시글 수 반환
-    public long countBoards() {
-        return boardRepository.count();
+    public Board getBoard(Integer id) {
+        Optional<Board> board = this.boardRepository.findById(id);
+        if (board.isPresent()) {
+            return board.get();
+        } else {
+            throw new DataNotFoundException("board not found");
+        }
     }
 }

@@ -211,6 +211,9 @@ a {
 .post-content {
     margin-top: 20px;
     line-height: 1.6;
+    overflow-y: auto;   /* 내용이 길 경우 스크롤 추가 */
+    white-space: pre-wrap; /* 줄바꿈과 공백을 유지하면서 화면 폭에 맞게 자동 줄바꿈 */
+    word-wrap: break-word; /* 긴 단어가 화면을 넘어가지 않도록 줄바꿈 */
 }
 
 /* 게시글 이미지 스타일 */

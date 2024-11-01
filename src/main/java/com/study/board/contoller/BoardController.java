@@ -14,6 +14,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    //게시글 리스트
     @GetMapping("/board/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Board> paging = this.boardService.getList(page);
@@ -21,11 +22,13 @@ public class BoardController {
         return "boardList";
     }
 
+    //게시글작성
     @GetMapping("/board/write")
     public String boardWriteForm(){
         return "boardwrite";
     }
 
+    //게시글 작성완료
     @PostMapping("/board/writepro")
     public String boardWritePro(Board board, Model model) {
         boardService.write(board);
@@ -34,19 +37,20 @@ public class BoardController {
         return "message"; // "message.html" 템플릿 파일을 반환
     }
 
-
+    // 게시글 세부내용
     @GetMapping("/board/view")
     public String boardView(Model model, @RequestParam("id") int id) {
         model.addAttribute("board", boardService.boardView(id));
         // localhost/board/view?id=1
         return "boardView"; // 뷰를 담당하는 템플릿 파일 이름 리턴에 써주면 된다..
     }
+    //게시글 삭제
     @GetMapping("/board/delete")
     public String boardDelete(@RequestParam("id") int id){
         boardService.boardDelete(id);
         return "redirect:/board/list";
     }
-
+    //게시글 수정
     @GetMapping("board/modify/{id}")
     public String boardModify(@PathVariable("id") int id, Model model) {
 
@@ -54,6 +58,7 @@ public class BoardController {
 
         return "boardmodify";
     }
+    //게시글 업데
     @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") int id, Board board){
         Board boardTemp =boardService.boardView(id);// 기존 내용 가져오기
