@@ -19,7 +19,7 @@
                     <a href="/board/write">새 글 작성</a>
                 </button>
             </div>
-            <div class="post-list" th:each="board : ${list}">
+            <div class="post-list" th:each="board, loop : ${paging}">
                 <div class="post-item">
                     <div class="post-image">
                         <img src="image.jpg" alt="게시글 이미지">
@@ -38,19 +38,29 @@
                     </div>
                 </div>
             </div>
+            <!-- 페이징처리 시작 -->
+            <div th:if="${!paging.isEmpty()}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{|?page=${paging.number-1}|}">
+                            <span>이전</span>
+                        </a>
+                    </li>
+                    <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                        th:classappend="${page == paging.number} ? 'active'"
+                        class="page-item">
+                        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                            <span>다음</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-            <!-- 페이지수도 아직 미구현
-            <div class="pagination">
-                <span class="prev" th:if="${page > 0}">
-                    <a th:href="@{/board/list(page=${page - 1})}">이전</a>
-                </span>
-                <span class="page-number" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:class="${i == page} ? 'active'">
-                    <a th:href="@{/board/list(page=${i})}" th:text="${i + 1}"></a>
-                </span>
-                <span class="next" th:if="${page < totalPages - 1}">
-                    <a th:href="@{/board/list(page=${page + 1})}">다음</a>
-                </span>
-            </div>-->
 
         </div>
     </div>

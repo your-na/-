@@ -255,30 +255,31 @@ h2 {
 /* Pagination */
 .pagination {
     text-align: center;
+    list-style: none; /* 불릿 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    display: flex; /* Flexbox 사용하여 가로 정렬 */
+    justify-content: center; /* 중앙 정렬 */
     margin-top: 20px;
 }
-
-.pagination .page-number {
-    display: inline-block;
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
+.pagination .page-item {
+    margin: 0 5px; /* 각 페이지 버튼 사이의 간격 */
 }
 
-.pagination .prev,
-.pagination .next {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
+.pagination .page-link {
+    padding: 10px 15px; /* 버튼의 안쪽 여백 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    background-color: #f8f9fa; /* 기본 배경색 */
+    color: #007bff; /* 링크 색상 */
+    text-decoration: none; /* 링크에 밑줄 없애기 */
 }
 
-.pagination .prev:hover,
-.pagination .next:hover,
-.pagination .page-number:hover {
-    background-color: #e6effb;
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* 활성 페이지 버튼 배경색 */
+    color: white; /* 활성 페이지 버튼 텍스트 색상 */
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #e9ecef; /* 비활성 버튼 배경색 */
+    color: #6c757d; /* 비활성 버튼 텍스트 색상 */
+    pointer-events: none; /* 클릭 방지 */
 }

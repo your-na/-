@@ -2,6 +2,7 @@ package com.study.board.contoller;
 import com.study.board.entity.Board;
 import com.study.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,12 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @GetMapping("/list")
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        Page<Board> paging = this.boardService.getList(page);
+        model.addAttribute("paging", paging);
+        return "boardList";
+    }
 
     @GetMapping("/board/write")
     public String boardWriteForm(){
@@ -27,18 +34,6 @@ public class BoardController {
         return "message"; // "message.html" 템플릿 파일을 반환
     }
 
-
-    @GetMapping("/board/list")
-    public  String boardList(Model model){
-        List<Board> boards = boardService.boardList();
-        long totalBoards = boardService.countBoards(); // 전체 게시글 수
-        int pageSize = 10; // 한 페이지에 표시할 게시글 수
-        int totalPages = (int) Math.ceil((double) totalBoards / pageSize); // 전체 페이지 수 계산
-
-        model.addAttribute("list", boards);
-        model.addAttribute("totalPages", totalPages);
-        return "boardList"; // 게시글 리스트를 보여줄 템플릿
-    }
 
     @GetMapping("/board/view")
     public String boardView(Model model, @RequestParam("id") int id) {

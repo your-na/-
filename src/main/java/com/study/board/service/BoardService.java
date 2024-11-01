@@ -4,6 +4,9 @@ import com.study.board.entity.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.study.board.repository.BoardRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -22,6 +25,10 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    public Page<Board> getList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.boardRepository.findAll(pageable);
+    }
     // 특정 게시글 불러오기
     public Board boardView(int id) {
         return boardRepository.findById(id).orElse(null);
