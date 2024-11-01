@@ -14,7 +14,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/list")
+    @GetMapping("/board/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Board> paging = this.boardService.getList(page);
         model.addAttribute("paging", paging);
