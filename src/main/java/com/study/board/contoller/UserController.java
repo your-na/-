@@ -28,10 +28,13 @@ public class UserController {
         try {
             userService.saveUser(user); // 사용자 저장 시도
             model.addAttribute("message", "회원가입이 완료되었습니다.");
-            return "redirect:/board/list"; // 회원가입 후 보드 리스트 페이지로 리다이렉트
+            return "redirect:/user/login"; // 회원가입 후 보드 리스트 페이지로 리다이렉트
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage()); // 에러 메시지 추가
-            return "/board/write"; // 에러 발생 시 join.html로 다시 리턴
+            return "/user/join"; // 에러 발생 시 join.html로 다시 리턴
         }
     }
+
+    @GetMapping("/user/login")
+    public String loginForm() {return "login";}
 }

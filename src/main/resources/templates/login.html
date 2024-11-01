@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>LOGIN</h1>
+    <form id="loginForm">
+      <div class="input-container">
+        <input type="text" id="login-username" placeholder="아이디" required>
+        <div class="error-message" id="username-error">존재하지 않는 아이디입니다.</div> <!-- 오류 메시지 추가 -->
+      </div>
+      <div class="input-container">
+        <input type="password" id="login-password" placeholder="비밀번호" required>
+        <div class="error-message" id="password-error">비밀번호가 일치하지 않습니다.</div> <!-- 오류 메시지 추가 -->
+      </div>
+      <button type="submit">로그인</button>
+      <a href="../회원가입/join.html">회원가입</a>
+    </form>
+  </div>
+</body>
+</html>
