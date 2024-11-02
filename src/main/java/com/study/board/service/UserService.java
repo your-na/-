@@ -5,6 +5,8 @@ import com.study.board.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -26,5 +28,10 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다."); // 예외 처리
         }
         return userRepository.save(user); // 사용자 정보 저장
+    }
+
+    public boolean validateUser(String username, String password) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.isPresent() && user.get().getPassword().equals(password);
     }
 }

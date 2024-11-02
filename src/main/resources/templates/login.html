@@ -10,16 +10,50 @@
     <h1>LOGIN</h1>
     <form id="loginForm">
       <div class="input-container">
-        <input type="text" id="login-username" placeholder="아이디" required>
-        <div class="error-message" id="username-error">존재하지 않는 아이디입니다.</div> <!-- 오류 메시지 추가 -->
+        <input type="text" id="username" placeholder="아이디" required>
+        <div class="error-message" id="username-error"></div> <!-- 오류 메시지 추가 -->
       </div>
       <div class="input-container">
-        <input type="password" id="login-password" placeholder="비밀번호" required>
-        <div class="error-message" id="password-error">비밀번호가 일치하지 않습니다.</div> <!-- 오류 메시지 추가 -->
+        <input type="password" id="password" placeholder="비밀번호" required>
+        <div class="error-message" id="password-error"></div> <!-- 오류 메시지 추가 -->
       </div>
       <button type="submit">로그인</button>
-      <a href="../회원가입/join.html">회원가입</a>
+      <a href="/api/user/join">회원가입</a>
     </form>
   </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // 폼 제출 기본 동작 방지
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // 로그인 요청
+      fetch('http://localhost:8090/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username, password: password })
+      })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('아이디 또는 비밀번호가 틀립니다');
+                }
+                return response.text(); // 성공 시 응답 텍스트 반환
+              })
+              .then(data => {
+                // 로그인 성공 시 처리 (예: 대시보드로 리다이렉트)
+                alert(data); // "로그인 성공" 메시지 표시
+                window.location.href = '/home'; // 로그인 후 이동할 페이지
+              })
+              .catch(error => {
+                // 로그인 실패 시 오류 메시지 표시
+                document.getElementById('error-message').innerText = error.message;
+              });
+    });
+  </script>
+
 </body>
 </html>
