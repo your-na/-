@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Page</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="top-bar">
+                <div class="logo">
+                    <a href="../메인페이지/main.html">
+                        <img src="/images/Logo.png" alt="logo">
+                    </a>
+                </div>
+                <div class="search-bar-container">
+                    <input type="text" class="search-bar" placeholder="검색어 입력">
+                    <span class="search-icon"><img src="/images/search.png" alt=""></span>
+                </div>
+                <div class="user-icons">
+                    <div class="bell-icon">
+                        <a href="">
+                            <img src="/images/bell.png" alt="">
+                        </a>
+                    </div>
+                    <div class="user-icon">
+                        <img src="/images/user.png" alt="">
+                        <ul>
+                            <li><a href="">회원정보수정</a></li>
+                            <li><a href="">내가 쓴 게시글</a></li>
+                            <li><a href="">좋아요 누른 게시글</a></li>
+                            <li><a href="">저장 한 게시글</a></li>
+                            <li><a href="">로그아웃</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <ul class="main-menu">
+                    <li class="menu-item">게시글
+                        <ul class="submenu">
+                            <li><a href="">HOT 게시글</a></li>
+                            <li><a href="/board/list">최신 게시글</a></li>
+                            <li><a href="/board/write">게시글 작성하기</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">1:1채팅
+                        <ul class="submenu">
+                            <li><a href="">1:1 채팅</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">랭킹
+                        <ul class="submenu">
+                            <li><a href="">조회수</a></li>
+                            <li><a href="">유용한 정보 제공자</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">자주 묻는 질문 (FAQ)
+                        <ul class="submenu">
+                            <li><a href="">자주 묻는 질문</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">지원&문의
+                        <ul class="submenu">
+                            <li><a href="">문의</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Carousel Section -->
+    <section class="carousel">
+        <div class="carousel-content">
+            <div class="carousel-item active"><img src="/images/banner1.jpg" alt=""></div>
+            <div class="carousel-item"><img src="/images/banner2.jpg" alt=""></div>
+            <div class="carousel-item"><img src="/images/banner3.jpg" alt=""></div>
+        </div>
+        <div class="carousel-controls">
+            <button class="prev-btn">◀</button>
+            <button class="next-btn">▶</button>
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </section>
+
+    <!-- HOT 게시글 Section -->
+    <section class="hot-posts">
+        <div class="section-title">
+            <h2>HOT 게시글</h2>
+            <a href="/board/list" class="see-more">더보기</a>
+        </div>
+        <div class="posts-container">
+            <!-- HOT 게시글 목록을 동적으로 표시 -->
+            <!--<div th:each="post : ${hotPosts}" class="post-card">
+                <a href="/board/{post.id}">
+                    <img th:src="@{'/images/' + ${post.imagePath}}" alt="게시글 이미지">
+                    <div class="post-content">
+                        <p class="nickname" th:text="${post.nickname}"></p>
+                        <p class="date" th:text="${post.date}"></p>
+                        <p class="description" th:text="${post.content}"></p>
+                        <div class="post-meta">
+                            <span th:text="'조회수 ' + ${post.viewCount}"></span>
+                            <span th:text="'♥ ' + ${post.likeCount}"></span>
+                        </div>
+                    </div>
+                </a>
+            </div> -->
+        </div>
+    </section>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const dots = document.querySelectorAll('.dot');
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            const carouselContent = document.querySelector('.carousel-content');
+            let currentIndex = 0;
+
+            function showSlide(index) {
+                if (index >= carouselItems.length) index = 0;
+                if (index < 0) index = carouselItems.length - 1;
+
+                carouselContent.style.transform = `translateX(-${index * 100}%)`;
+
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+
+                currentIndex = index;
+            }
+
+            function nextSlide() {
+                showSlide(currentIndex + 1);
+            }
+
+            function prevSlide() {
+                showSlide(currentIndex - 1);
+            }
+
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    showSlide(i);
+                });
+            });
+
+            // Auto-slide feature (optional)
+            setInterval(nextSlide, 3000); // Change slide every 3 seconds
+        });
+    </script>
+</body>
+</html>
