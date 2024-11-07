@@ -30,7 +30,6 @@ public class UserService {
         return userRepository.save(user); // 사용자 정보 저장
     }
 
-    // 로그인 시 사용자 검증
     public boolean validateUser(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
         return user.isPresent() && user.get().getPassword().equals(password);
