@@ -12,8 +12,8 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    @Autowired
-    private BoardRepository boardRepository;
+    //@Autowired
+    //private BoardRepository boardRepository;
 
     @GetMapping("/main")
     public String mainPage(Model model) {
