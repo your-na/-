@@ -64,18 +64,19 @@ public class UserController {
     // 로그인 처리 (POST 요청)
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDTO loginRequest) {
-        try {
-            boolean isValidUser = userService.validateUser(loginRequest.getUsername(), loginRequest.getPassword());
-
-            if (isValidUser) {
-                return ResponseEntity.ok("Login successful");
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+    try {
+        boolean isValidUser = userService.validateUser(loginRequest.getUsername(), loginRequest.getPassword());
+        
+        if (isValidUser) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
     }
+}
+
 
 
 
